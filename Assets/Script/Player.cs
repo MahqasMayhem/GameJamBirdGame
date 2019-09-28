@@ -12,11 +12,11 @@ public class Player : MonoBehaviour
 
     #endregion
     private Rigidbody rb; //Test Variable, remove later
-    public Transform beakBindPoint;
+    public Transform beakBindPoint, currentEavesdrop;
     public float listenModifier, eavesdropLevel;
 
     public bool eavesdropping;
-    private Transform currentEavesdrop, playerT;
+    private Transform playerT;
 
     #region Test Variable Declarations
     private Text eavesdropIndicator;
@@ -66,21 +66,24 @@ public class Player : MonoBehaviour
         {
             //TODO: spike Suspicion to super-high, not 100
         }
-        if (!eavesdropping && other.gameObject.CompareTag("ListenField"))
+        if ((other.gameObject.name == "ListenField") && !eavesdropping)
         {
             eavesdropping = true;
             if (other.gameObject.GetComponent<Transform>() != currentEavesdrop)
             {
                 currentEavesdrop = other.gameObject.GetComponent<Transform>().parent.GetComponent<Transform>();
             }
-
+            BroadcastMessage("EnableEavesdrop");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("ListenField"))
-        eavesdropping = false;
+        if (other.gameObject.name=="ListenField")
+        {
+            eavesdropping = false;
+            BroadcastMessage("DisableEavesdrop");
+        }
     }
     private GameObject TargetDevice()
     {
@@ -91,8 +94,18 @@ public class Player : MonoBehaviour
         }
         GameObject Spy = NPCs[Random.Range(0, NPCs.Count)];
         Debug.Log(Spy.ToString() + " is a spy!");
-
         GameObject targetDevice = Spy.transform.Find("phone").gameObject;
+        while (!targetDevice)
+        {
+            Spy = NPCs[Random.Range(0, NPCs.Count)];
+            targetDevice = Spy.transform.Find("phone").gameObject;
+        }
+        if (Spy.tag == "Group")
+        {
+            Spy.GetComponent<Transform>().parent.Find("ListenField").tag = "Spy"; 
+        }
+        Spy.tag = "Spy";
+        
         return targetDevice;
     }
 
@@ -105,7 +118,7 @@ public class Player : MonoBehaviour
     }
     private void UpdateEavesdropLevel(bool eavesdrop)
     {
-        if (!eavesdrop && eavesdropLevel != 0)
+        if (!eavesdrop)
         {
             eavesdropLevel = 0;
         }
@@ -116,5 +129,6 @@ public class Player : MonoBehaviour
         }
         eavesdropIndicator.text = ("Eavesdrop Level:" +(int)eavesdropLevel);
     }
+
 
 }
