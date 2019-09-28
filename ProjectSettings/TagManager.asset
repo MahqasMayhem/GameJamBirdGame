@@ -8,6 +8,8 @@ TagManager:
   - Phone
   - Spy
   - NPC
+  - ListenField
+  - ViewCone
   layers:
   - Default
   - TransparentFX

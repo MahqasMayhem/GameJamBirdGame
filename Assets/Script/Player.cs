@@ -13,9 +13,9 @@ public class Player : MonoBehaviour
     #endregion
     private Rigidbody rb; //Test Variable, remove later
     public Transform beakBindPoint;
+    public float listenModifier, eavesdropLevel;
 
-    private float eavesdropLevel, listenModifier;
-    private bool eavesdropping;
+    public bool eavesdropping;
     private Transform currentEavesdrop, playerT;
 
     #region Test Variable Declarations
@@ -51,35 +51,35 @@ public class Player : MonoBehaviour
     void Update()
     {
         //Test movement, remove later
-        rb.position = new Vector3(rb.position.x - 0.2f, rb.position.y, rb.position.z);
+        //rb.position = new Vector3(rb.position.x - 0.2f, rb.position.y, rb.position.z);
         //End Temporary Test code
         UpdateEavesdropLevel(eavesdropping);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Phone"));
+        if (other.gameObject.CompareTag("Phone"))
         {
             Grab(other.gameObject.GetComponent<Transform>());
         }
-        if (other.CompareTag("NPC"));
+        if (other.CompareTag("NPC"))
         {
             //TODO: spike Suspicion to super-high, not 100
         }
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (!eavesdropping && other.CompareTag("ListenField"))
+        if (!eavesdropping && other.gameObject.CompareTag("ListenField"))
         {
             eavesdropping = true;
-            if (!other.gameObject == currentEavesdrop)
+            if (other.gameObject.GetComponent<Transform>() != currentEavesdrop)
             {
-                currentEavesdrop = other.gameObject.GetComponent<Transform>();
+                currentEavesdrop = other.gameObject.GetComponent<Transform>().parent.GetComponent<Transform>();
             }
+
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.CompareTag("ListenField"))
         eavesdropping = false;
     }
     private GameObject TargetDevice()
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
     }
     private void UpdateEavesdropLevel(bool eavesdrop)
     {
-        if (!eavesdrop)
+        if (!eavesdrop && eavesdropLevel != 0)
         {
             eavesdropLevel = 0;
         }
