@@ -4,17 +4,16 @@ using UnityEngine;
 
 class WalkScript : MonoBehaviour
 {
-    private Rigidbody rb;
     public float speed;
     public bool fly;
     public GameObject MissionComplete;
-    public float minAngle = 0;
-    public float maxAngle = 0;
-    public float upwardForce = 0;
-    public float flapTime = 0;
-    public float zVo = 0;
-    public float xVo = 0;
-    public float yVo = 0;
+    public float minAngle = 45;
+    public float maxAngle = 315;
+    public float upwardForce = 300;
+    public float flapTime = 0.9f;
+    public float zVo = 100;
+    public float xVo = 50;
+    public float yVo = 50;
     public int maxReps = 11;
     private CharacterController cc;
     public bool readyToFly = true;
@@ -24,13 +23,13 @@ class WalkScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        cc = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("space"))
+        if (Input.GetKeyDown("space"))
         {
             fly = !fly;
         }
@@ -116,24 +115,24 @@ class WalkScript : MonoBehaviour
     {
         if (Input.GetKey("up") || Input.GetKey("w"))
         {
-            rb.velocity = transform.forward * speed;
+            cc.Move(transform.forward * (speed) * Time.deltaTime);
             Debug.Log("up");
         }
 
         if (Input.GetKey("down") || Input.GetKey("s"))
         {
-            rb.velocity = -transform.forward * speed;
+            cc.Move(transform.forward * (-speed) * Time.deltaTime);
             Debug.Log("down");
         }
         if (Input.GetKey("left") || Input.GetKey("a"))
         {
             //rb.velocity = -transform.right * speed;
-            transform.Rotate(0, -3, 0);
+            transform.Rotate(0, -1.5f, 0);
         }
         if (Input.GetKey("right") || Input.GetKey("d"))
         {
             //rb.velocity = transform.right * speed;
-            transform.Rotate(0, 3, 0);
+            transform.Rotate(0, 1.5f, 0);
         }
     }
 }
