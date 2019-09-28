@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &8691851526875582562
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3072972131554267720}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.20000006, y: 0.15811741, z: 0.20000002}
+  m_Center: {x: 0.000000022351745, y: -0.020941285, z: 0}
 --- !u!1001 &6450437561314233153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10,7 +23,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 92e79dffeb3048248883b035662d7f56,
         type: 3}
       propertyPath: m_Name
-      value: Bush2
+      value: Bush2 Variant
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 92e79dffeb3048248883b035662d7f56,
         type: 3}
@@ -84,3 +97,9 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c32738eb2f4dc3d4fa2ac596bac1f914, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92e79dffeb3048248883b035662d7f56, type: 3}
+--- !u!1 &3072972131554267720 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 92e79dffeb3048248883b035662d7f56,
+    type: 3}
+  m_PrefabInstance: {fileID: 6450437561314233153}
+  m_PrefabAsset: {fileID: 0}

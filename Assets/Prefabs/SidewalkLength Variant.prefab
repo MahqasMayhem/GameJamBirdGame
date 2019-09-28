@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 33768dd01f9296a41bdde454a7256f23,
         type: 3}
       propertyPath: m_Name
-      value: SidewalkLength
+      value: SidewalkLength Variant
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 33768dd01f9296a41bdde454a7256f23,
         type: 3}

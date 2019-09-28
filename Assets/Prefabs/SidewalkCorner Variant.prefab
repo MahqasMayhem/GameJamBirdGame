@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: cb7e12307ff99ab49bdf8b0943b4c8eb,
         type: 3}
       propertyPath: m_Name
-      value: SidewalkCorner
+      value: SidewalkCorner Variant
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: cb7e12307ff99ab49bdf8b0943b4c8eb,
         type: 3}
