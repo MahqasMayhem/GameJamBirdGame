@@ -10,22 +10,32 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 3867d01ec4cadce46a391473f01a29ac,
         type: 3}
       propertyPath: m_Name
+      value: Phone Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3867d01ec4cadce46a391473f01a29ac,
+        type: 3}
+      propertyPath: m_TagString
       value: Phone
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3867d01ec4cadce46a391473f01a29ac,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 217c0acf03c10644ba9112b785bee3c4, type: 2}
     - target: {fileID: -4216859302048453862, guid: 3867d01ec4cadce46a391473f01a29ac,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.87
+      value: 11.714283
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3867d01ec4cadce46a391473f01a29ac,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.16
+      value: 1.52
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3867d01ec4cadce46a391473f01a29ac,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.51
+      value: 48.761787
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3867d01ec4cadce46a391473f01a29ac,
         type: 3}
@@ -67,10 +77,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -1504981713932161579, guid: 3867d01ec4cadce46a391473f01a29ac,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 217c0acf03c10644ba9112b785bee3c4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3867d01ec4cadce46a391473f01a29ac, type: 3}
