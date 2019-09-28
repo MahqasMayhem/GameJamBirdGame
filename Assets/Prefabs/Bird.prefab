@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3465166466739460930}
   - component: {fileID: 3465166466739460931}
-  - component: {fileID: 3465166466739460942}
   m_Layer: 0
   m_Name: Bird
   m_TagString: Untagged
@@ -51,28 +50,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3465166466739460942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3465166466739460941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59c60ecc68ed1714f805f981ad480452, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minAngle: 45
-  maxAngle: 315
-  upwardForce: 300
-  flapTime: 0.9
-  zVo: 100
-  xVo: 50
-  yVo: 50
-  maxReps: 11
-  readyToFly: 1
-  rested: 1
 --- !u!1 &8032102815499266446
 GameObject:
   m_ObjectHideFlags: 0
