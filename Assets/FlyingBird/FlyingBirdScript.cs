@@ -15,7 +15,6 @@ using UnityEngine;
     public bool readyToFly = true;
     public bool rested = true;
     private CharacterController cc;
-    private float speed = 80f;
     private int reps = 0;
     //private float tiltAngle = 40f;
     //private GameObject Bird;
@@ -30,15 +29,10 @@ using UnityEngine;
         cc = GetComponent<CharacterController>();
     }
 
-    private void Awake()
-    {
-       
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftShift)|| Input.GetKey(KeyCode.RightShift))
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
             cc.Move(transform.forward * (zVo * 2) * Time.deltaTime);
         }
@@ -49,25 +43,25 @@ using UnityEngine;
             //rb.velocity = transform.forward * zVo;
         }
 
-        if (Input.GetKey("s")|| Input.GetKey("down"))
+        if (Input.GetKey("s") || Input.GetKey("down"))
         {
             //transform.Rotate(1f, 0, 0);
             transform.Rotate(Vector3.right, 1f);
         }
 
-        if (Input.GetKey("up")|| Input.GetKey("w"))
+        if (Input.GetKey("up") || Input.GetKey("w"))
         {
             //transform.Rotate(-1f, 0, 0);
             transform.Rotate(Vector3.right, -1f);
         }
 
-        if (Input.GetKey("a")|| Input.GetKey("left"))
+        if (Input.GetKey("a") || Input.GetKey("left"))
         {
             //transform.Rotate(0, -1f, 0);
             transform.Rotate(Vector3.up, -1f);
         }
 
-        if (Input.GetKey("d")|| Input.GetKey("right"))
+        if (Input.GetKey("d") || Input.GetKey("right"))
         {
             //transform.Rotate(0, 1f, 0);
             transform.Rotate(Vector3.up, 1f);
@@ -75,15 +69,15 @@ using UnityEngine;
 
         //transform.Rotate(Input.GetAxis("Vertical"),0.0f, - Input.GetAxis("Horizontal"));
 
-        
-        if( reps > maxReps)
+
+        if (reps > maxReps)
         {
             rested = false;
             StartCoroutine("Resting");
             reps = 0;
         }
 
-        if(readyToFly && rested)
+        if (readyToFly && rested)
         {
             readyToFly = false;
             //StartCoroutine("FlapWing");
@@ -91,23 +85,7 @@ using UnityEngine;
 
         float spinangle = BirdClamp(transform.rotation.eulerAngles.y, minAngle, maxAngle);
         Debug.Log(spinangle + " " + transform.rotation.eulerAngles.y);
-        //transform.eulerAngles = new Vector3(transform.eulerAngles.x, BirdClamp(transform.rotation.eulerAngles.y, minAngle, maxAngle), BirdClamp(transform.rotation.eulerAngles.z, minAngle, maxAngle));
-        //transform.eulerAngles = new Vector3(0, 0, 0);
-    }
-
-    IEnumerator FlapWing()
-    {
-        yield return new WaitForSeconds(flapTime);
-        //rb.velocity = new Vector3(0,0,0);
-        //rb.AddForce(transform.up * upwardForce);
-        readyToFly = true;
-        reps++;
-    }
-
-    IEnumerator Resting()
-    {
-        yield return new WaitForSeconds(flapTime * 4);
-        rested = true;
+        
     }
 
         float BirdClamp(float cur, float min, float max)
