@@ -10,6 +10,7 @@ TagManager:
   - NPC
   - ListenField
   - ViewCone
+  - Group
   layers:
   - Default
   - TransparentFX

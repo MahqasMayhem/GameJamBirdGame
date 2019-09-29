@@ -29,6 +29,7 @@ class WalkScript : MonoBehaviour
         MissionComplete = GameObject.Find("UI_MissionWin");
         MissionComplete.SetActive(false);
         anim = transform.Find("Pigeon").gameObject.GetComponent<Animator>();
+        anim.SetBool("IsWalking", true);
     }
 
     // Update is called once per frame
@@ -38,9 +39,9 @@ class WalkScript : MonoBehaviour
         {
             fly = !fly;
             if (!fly)
-                anim.SetBool(0, true);
+                anim.SetBool("IsWalking", true);
             else
-                anim.SetBool(0, false);
+                anim.SetBool("IsWalking", false);
         }
 
         if (fly)

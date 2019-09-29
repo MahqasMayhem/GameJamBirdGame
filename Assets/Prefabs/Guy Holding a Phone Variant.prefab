@@ -93,7 +93,12 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 306692b6c21b80b4abf7678ba0735400,
         type: 3}
       propertyPath: m_Name
-      value: Guy Holding a Phone
+      value: Guy Holding a Phone Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 306692b6c21b80b4abf7678ba0735400,
+        type: 3}
+      propertyPath: m_TagString
+      value: NPC
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 306692b6c21b80b4abf7678ba0735400,
         type: 3}
