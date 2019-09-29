@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     #region Variable declaration
     public GameObject targetPhone;
-    public GameObject player;
+    public GameObject player, missionComplete, missionFail;
     public float suspicion;
 
     #endregion
@@ -35,8 +35,11 @@ public class Player : MonoBehaviour
 
         suspicion = 0f;
         targetPhone = TargetDevice();
-
-        beakBindPoint = GameObject.Find("BeakBindPoint").GetComponent<Transform>();
+        missionComplete = GameObject.Find("UI_MissionWin");
+        missionComplete.SetActive(false);
+        missionFail = GameObject.Find("UI_MissionFail");
+        missionFail.SetActive(false);
+        beakBindPoint = transform.Find("BeakBindPoint").GetComponent<Transform>();
         playerT = player.GetComponent<Transform>();
         eavesdropLevel = 0f;
         eavesdropping = false;
@@ -74,6 +77,23 @@ public class Player : MonoBehaviour
                 currentEavesdrop = other.gameObject.GetComponent<Transform>().parent.GetComponent<Transform>();
             }
             BroadcastMessage("EnableEavesdrop");
+        }
+        if (other.gameObject.name == "BirdNest" && beakBindPoint.childCount > 0)
+        {
+            var device = beakBindPoint.GetChild(0).gameObject;
+            if (device == targetPhone) //Win
+            {
+                missionComplete.SetActive(true);
+            }
+            else if (device == null)
+            {
+                throw new System.NullReferenceException("Phone pickup not bound to bird or beakBindPoint child is missing");
+            }
+            else //Lose
+            {
+                missionFail.SetActive(true);
+                
+            }
         }
     }
 
@@ -114,7 +134,8 @@ public class Player : MonoBehaviour
         device.SetParent(beakBindPoint);
         device.position = beakBindPoint.position;
         device.rotation = Quaternion.Euler(0f,0f,0f);
-        device.localRotation = Quaternion.Euler(0f, 0f, 0f); //I don't know what the actual values need to be just yet??? Need the asset from Zach
+        device.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        device.GetComponent<BoxCollider>().enabled = false;
     }
     private void UpdateEavesdropLevel(bool eavesdrop)
     {

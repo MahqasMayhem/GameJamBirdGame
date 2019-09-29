@@ -8,14 +8,14 @@ public class Eavesdropper : MonoBehaviour
 {
     
     public TextHandler textManager;
-    public GameObject dialogueBox, player;
+    public GameObject UI_DialogueBox, UI_DialogueContainer, player;
     public Player playerManager;
     public float chanceMultiplier;
 
     private Transform currentEavesdrop;
     private Coroutine textPrinter;
     private string eavesdropType, currentDialogue, textContent;
-    private string characterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+=-";
+    private string characterSet = "ô╚╔╩╦╠░░░░═╬╧╨╤╥!@#▀$%^&™░¢►▀▀▀♫╢↓▀πa╚♀#↨♪▀○◘•↓R╤ÜYç╞┘ñ*┬▓¼⌠î╡♥";
     // Start is called before the first frame update
     void Start()
     {
@@ -27,15 +27,19 @@ public class Eavesdropper : MonoBehaviour
         {
             textManager = GameObject.Find("TextManager").GetComponent<TextHandler>();
         }
-        if (!dialogueBox)
+        if (!UI_DialogueBox)
         {
-            dialogueBox = GameObject.Find("UI_DialogueBox");
+            UI_DialogueContainer = GameObject.Find("UI_DialogueContainer");
+        }
+        if (!UI_DialogueBox)
+        {
+            UI_DialogueBox = GameObject.Find("UI_DialogueBox");
         }
         if (!playerManager)
         {
             playerManager = gameObject.GetComponent<Player>();
         }
-        dialogueBox.SetActive(false);
+        UI_DialogueContainer.SetActive(false);
         string asset = textManager.GetRandomInnocentDialogue();
     }
 
@@ -62,13 +66,13 @@ public class Eavesdropper : MonoBehaviour
                 
             }
             i++;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
     private void PrintCharacter(char letter)
     {
         textContent += letter;
-        //dialogueBox.GetComponent<Text>().text = textContent;
+        
     }
     private bool CalculateChance()
     {
@@ -92,16 +96,16 @@ public class Eavesdropper : MonoBehaviour
     {
         if (playerManager.eavesdropping)
         {
-            dialogueBox.GetComponent<Text>().text = textContent;
+            UI_DialogueBox.GetComponent<Text>().text = textContent;
         }
-        else if (dialogueBox.active == true)
+        else if (UI_DialogueContainer.activeSelf == true)
         {
-            dialogueBox.SetActive(false);
+            UI_DialogueContainer.SetActive(false);
         }
     }
     void EnableEavesdrop()
     {
-        dialogueBox.SetActive(true);
+        UI_DialogueContainer.SetActive(true);
         currentEavesdrop = playerManager.currentEavesdrop;
         if (currentEavesdrop.gameObject.CompareTag("NPC"))
         {
@@ -119,8 +123,9 @@ public class Eavesdropper : MonoBehaviour
     }
     void DisableEavesdrop()
     {
-        dialogueBox.SetActive(false);
-        dialogueBox.GetComponent<Text>().text = "";
+        UI_DialogueBox.GetComponent<Text>().text = string.Empty;
+        textContent = string.Empty;
+        UI_DialogueContainer.SetActive(false);
         StopCoroutine(textPrinter);
     }
 }
