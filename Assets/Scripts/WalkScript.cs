@@ -12,9 +12,9 @@ class WalkScript : MonoBehaviour
     public float maxAngle = 315;
     public float upwardForce = 300;
     public float flapTime = 0.9f;
-    public float zVo = 100;
-    public float xVo = 50;
-    public float yVo = 50;
+    public float zVo = 20;
+    public float xVo = 10;
+    public float yVo = 10;
     public int maxReps = 11;
     private CharacterController cc;
     public bool readyToFly = true;
@@ -46,11 +46,18 @@ class WalkScript : MonoBehaviour
         if (fly)
         {
             Fly();
+
+            if(Input.GetKeyDown("space"))
+            {
+               
+            }
+
         }
 
         else
         {
-            Walk();
+        Walk();
+          
         }
         if (!fly && transform.rotation.x != 0)
         {
