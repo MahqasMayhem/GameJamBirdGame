@@ -74,8 +74,6 @@ class WalkScript : MonoBehaviour
         float valueZ = Vector3.Angle(transform.right, Vector3.right);
         //float valueZ = comparisonT.rotation.eulerAngles.z - transform.rotation.eulerAngles.z;
         float valueX = Vector3.Angle(transform.forward, Vector3.forward);
-        Debug.Log("X:" + valueX);
-        Debug.Log("Z:" + valueZ);
         if (IsRoll)
         {
             if (valueZ > -65 && positive) return true;
@@ -171,7 +169,6 @@ class WalkScript : MonoBehaviour
             targetAngles.y += 1f;
             //transform.Rotate(Vector3.up, 1f);
         }
-        Debug.Log(targetAngles);
         targetAngles.x = ClampAngle(targetAngles.x, -65, 65);
         targetAngles.z = ClampAngle(targetAngles.z, -65, 65);
         targetRotation = Quaternion.Euler(targetAngles);
@@ -240,13 +237,11 @@ class WalkScript : MonoBehaviour
         if (Input.GetKey("up") || Input.GetKey("w"))
         {
             cc.Move(transform.forward * (speed) * Time.deltaTime);
-            Debug.Log("up");
         }
 
         if (Input.GetKey("down") || Input.GetKey("s"))
         {
             cc.Move(transform.forward * (-speed) * Time.deltaTime);
-            Debug.Log("down");
         }
         if (Input.GetKey("left") || Input.GetKey("a"))
         {

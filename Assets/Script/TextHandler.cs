@@ -14,9 +14,9 @@ public class TextHandler : MonoBehaviour
     private string[] speechType = new string[] {"innocent", "group", "spy"};
     public string[] directoryLocation = new string[] { "innocentDirectory", "groupDirectory", "spyDirectory" };
 
-    public DirectoryInfo innocentDirectory = new DirectoryInfo("Assets/Resources/innocentDialogue");
-    public DirectoryInfo groupDirectory = new DirectoryInfo("Assets/Resources/groupDialogue");
-    public DirectoryInfo spyDirectory = new DirectoryInfo("Assets/Resources/spyDialogue");
+    public DirectoryInfo innocentDirectory = new DirectoryInfo(Path.Combine(Application.streamingAssetsPath, "innocentDialogue"));
+    public DirectoryInfo groupDirectory = new DirectoryInfo(Path.Combine(Application.streamingAssetsPath, "groupDialogue"));
+    public DirectoryInfo spyDirectory = new DirectoryInfo(Path.Combine(Application.streamingAssetsPath, "spyDialogue"));
     private FileInfo[] innocentFileSet, groupFileSet, spyFileSet;
     private void Awake()
     {

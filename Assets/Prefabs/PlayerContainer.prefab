@@ -60,8 +60,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955853745151473192}
-  m_LocalRotation: {x: -0.08917843, y: 0.00000010312931, z: -0.000000956043, w: -0.9960157}
-  m_LocalPosition: {x: 2.0294657, y: 0.95684147, z: -5.773431}
+  m_LocalRotation: {x: -0.08917842, y: 0.0000001036582, z: -0.0000009560906, w: -0.9960157}
+  m_LocalPosition: {x: 28.578932, y: 0.07468319, z: -27.516861}
   m_LocalScale: {x: 1, y: 0.20000003, z: 0.40000007}
   m_Children: []
   m_Father: {fileID: 955853744748711931}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 955853745396417042}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,15 +204,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e9f9b58b0755e4996c5fd42c4f311e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPhone: {fileID: 0}
   player: {fileID: 955853745396417046}
   missionComplete: {fileID: 0}
   missionFail: {fileID: 0}
-  suspicion: 0
+  targetPhone: {fileID: 0}
   beakBindPoint: {fileID: 0}
   currentEavesdrop: {fileID: 0}
   listenModifier: 1
   eavesdropLevel: 0
+  suspicion: 0
   eavesdropping: 0
 --- !u!65 &955853745396417041
 BoxCollider:
@@ -407,7 +407,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955853745651225254}
-  m_LocalRotation: {x: -0.08917843, y: 0.00000010312931, z: -0.000000956043, w: -0.9960157}
+  m_LocalRotation: {x: -0.08917841, y: 0.000000068583745, z: -0.00000095294996, w: -0.9960157}
   m_LocalPosition: {x: 2.0294657, y: 0.95684147, z: -5.773431}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -476,7 +476,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955853745653282819}
-  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0.0000001872535}
+  m_LocalRotation: {x: -1, y: 0.00000028088027, z: -0, w: 0}
   m_LocalPosition: {x: 0.19946575, y: 0.9143295, z: 0.7965703}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -533,7 +533,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955853746306719883}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0275, y: -0.1294, z: 0}
+  m_LocalPosition: {x: 0.0087, y: 0.09, z: 0.2382}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 955853745396417040}
@@ -579,7 +579,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1308108857915878163}
-  m_Mesh: {fileID: 4164511204261677510, guid: 36318dcb108d08b4884d123faccebfc9, type: 3}
+  m_Mesh: {fileID: 4164511204261677510, guid: a9b96d2f0e563574d861e5da400aad6a, type: 3}
 --- !u!23 &1308108857915878171
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -597,7 +597,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: 36318dcb108d08b4884d123faccebfc9, type: 3}
+  - {fileID: 5561349426305759274, guid: a9b96d2f0e563574d861e5da400aad6a, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

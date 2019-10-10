@@ -14,6 +14,7 @@ public class Eavesdropper : MonoBehaviour
 
     private Transform currentEavesdrop;
     private Coroutine textPrinter;
+    private Text textDisplay;
     private string eavesdropType, currentDialogue, textContent;
     private string characterSet = "ô╚╔╩╦╠░░░░═╬╧╨╤╥!@#▀$%^&™░¢►▀▀▀♫╢↓▀πa╚♀#↨♪▀○◘•↓R╤ÜYç╞┘ñ*┬▓¼⌠î╡♥";
     // Start is called before the first frame update
@@ -41,6 +42,7 @@ public class Eavesdropper : MonoBehaviour
         }
         UI_DialogueContainer.SetActive(false);
         string asset = textManager.GetRandomInnocentDialogue();
+        textDisplay = UI_DialogueBox.GetComponent<Text>();
     }
 
     public IEnumerator FetchNextChar(string dialogue) //Generate the next character
@@ -78,7 +80,7 @@ public class Eavesdropper : MonoBehaviour
     {
         
         float chance = playerManager.eavesdropLevel;
-        if (Random.value > (chance / chanceMultiplier))
+        if (Random.value > (Vector3.Distance(gameObject.GetComponent<Transform>().position, currentEavesdrop.position)) / chanceMultiplier)
         {
             
             return true;
@@ -96,7 +98,7 @@ public class Eavesdropper : MonoBehaviour
     {
         if (playerManager.eavesdropping)
         {
-            UI_DialogueBox.GetComponent<Text>().text = textContent;
+            textDisplay.text = textContent;
         }
         else if (UI_DialogueContainer.activeSelf == true)
         {
@@ -110,21 +112,35 @@ public class Eavesdropper : MonoBehaviour
         if (currentEavesdrop.gameObject.CompareTag("NPC"))
         {
             currentDialogue = textManager.GetRandomInnocentDialogue();
+            textPrinter = StartCoroutine(FetchNextChar(currentDialogue));
         }
         else if (currentEavesdrop.gameObject.CompareTag("Group"))
         {
             currentDialogue = textManager.GetRandomGroupDialogue();
+            textPrinter = StartCoroutine(FetchNextChar(currentDialogue));
         }
-        else
+        else if (currentEavesdrop.gameObject.CompareTag("Spy"))
         {
             currentDialogue = textManager.GetRandomSpyDialogue();
-         }
-        textPrinter = StartCoroutine(FetchNextChar(currentDialogue));
+            textPrinter = StartCoroutine(FetchNextChar(currentDialogue));
+        }
+        else // If eavesdrop target is not valid, log
+        {
+            Debug.LogError("Eavesdropper: INVALID TAG '" + currentEavesdrop.gameObject.tag + "'");
+            textContent = ("ERROR@Eavesdropper: INVALID TAG '" + currentEavesdrop.gameObject.tag + "'");
+        }
+        if (currentDialogue.Length < 1)
+        {
+            Debug.LogError("Warning: Received empty string from Text Manager!");
+            textContent = ("ERROR: " + currentEavesdrop.gameObject.tag + "TYPE STRING CANNOT BE EMPTY.");
+        }
+        
     }
     void DisableEavesdrop()
     {
-        UI_DialogueBox.GetComponent<Text>().text = string.Empty;
+        textDisplay.text = string.Empty;
         textContent = string.Empty;
+        currentEavesdrop = null;
         UI_DialogueContainer.SetActive(false);
         StopCoroutine(textPrinter);
     }

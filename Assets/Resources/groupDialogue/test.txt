@@ -1,1 +1,0 @@
-This text exists for the purposes of TESTING the text reader. If it doesn't work I will actually cry

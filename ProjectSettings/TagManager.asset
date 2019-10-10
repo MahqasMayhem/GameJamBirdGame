@@ -11,6 +11,7 @@ TagManager:
   - ListenField
   - ViewCone
   - Group
+  - Interactive
   layers:
   - Default
   - TransparentFX
