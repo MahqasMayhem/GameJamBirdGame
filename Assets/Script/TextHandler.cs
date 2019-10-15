@@ -7,55 +7,81 @@ public class TextHandler : MonoBehaviour
 {
     public List<TextAsset> innocentDialogue, groupDialogue, spyDialogue;
     public List<FileInfo> innocentFiles, groupFiles, spyFiles;
-    public string innocentDirectory, groupDirectory, spyDirectory;
+    //public string innocentDirectory, groupDirectory, spyDirectory;
 
     private List<List<TextAsset>> dialogueLists = new List<List<TextAsset>>();
+    private List<List<FileInfo>> dialogueFileLists = new List<List<FileInfo>>();
     private string[] speechType = new string[] {"innocent", "group", "spy"};
     public string[] directoryLocation = new string[] { "innocentDirectory", "groupDirectory", "spyDirectory" };
-    private void Start()
+
+    public DirectoryInfo innocentDirectory = new DirectoryInfo(Path.Combine(Application.streamingAssetsPath, "innocentDialogue"));
+    public DirectoryInfo groupDirectory = new DirectoryInfo(Path.Combine(Application.streamingAssetsPath, "groupDialogue"));
+    public DirectoryInfo spyDirectory = new DirectoryInfo(Path.Combine(Application.streamingAssetsPath, "spyDialogue"));
+    private FileInfo[] innocentFileSet, groupFileSet, spyFileSet;
+    private void Awake()
     {
-        dialogueLists.Add(innocentDialogue);
-        dialogueLists.Add(groupDialogue);
-        dialogueLists.Add(spyDialogue);
-       innocentFiles = CollectFiles(innocentDirectory, innocentFiles);
-        groupFiles = CollectFiles(groupDirectory, groupFiles);
-        spyFiles = CollectFiles(spyDirectory, spyFiles);
+
+        innocentFileSet = innocentDirectory.GetFiles("*.txt");
+        groupFileSet = groupDirectory.GetFiles("*.txt");
+        spyFileSet = spyDirectory.GetFiles("*.txt");
+
 
     }
 
-    public TextAsset GetRandomDialogue(string speech)
+    public string GetRandomInnocentDialogue()
     {
 
-        var type = CheckType(speech);
-            var randomInt = Random.Range(0, type.Count-1);
-            TextAsset asset = ReadFile(randomInt, type);
+            int randomInt = Random.Range(0, (this.innocentFileSet.Length -1));
+        string asset = ReadFile(randomInt, innocentFileSet);
+       
+
+        return asset;
+    }
+    public string GetRandomGroupDialogue()
+    {
+
+        FileInfo[] type = this.groupFileSet;
+        var randomInt = Random.Range(0, type.Length - 1);
+        string asset = ReadFile(randomInt, type);
+
+
+        return asset;
+    }
+    public string GetRandomSpyDialogue()
+    {
+
+        FileInfo[] type = spyFileSet;
+        var randomInt = Random.Range(0, type.Length - 1);
+        string asset = ReadFile(randomInt, type);
 
 
         return asset;
     }
 
-    private List<FileInfo> CollectFiles(string directory, List<FileInfo> fileList) //scan the given directory and gather them into a list
+    private string ReadFile(int index, FileInfo[] type) 
     {
-        var info = new DirectoryInfo(directory);
-        
-
-        foreach (FileInfo file in info.GetFiles())
+        var targetAsset = type[index];
+        string asset = File.ReadAllText(targetAsset.FullName);
+        if (asset != null)
         {
-            Debug.Log(file.Name);
-            fileList.Add(file);
+            return asset;
         }
-        return fileList;
-    }
-    private TextAsset ReadFile(int index, List<TextAsset> type) //read the
-    {
-        TextAsset asset = type[index];
-        return asset;
+        else
+        {
+            throw new FileNotFoundException();
+        }
     }
 
     private List<TextAsset> CheckType(string type)
     {
         int index = System.Array.IndexOf(speechType, type);
         var value = dialogueLists[index];
+        return value;
+    }
+    private List<FileInfo> CheckTypeFile(string type)
+    {
+        int index = System.Array.IndexOf(speechType, type);
+        var value = dialogueFileLists[index];
         return value;
     }
 }
