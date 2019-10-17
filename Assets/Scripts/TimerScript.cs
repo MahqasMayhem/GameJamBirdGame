@@ -11,39 +11,49 @@ public class TimerScript : MonoBehaviour
     public GameObject missionFailed;
     private Text timer;
     public double seconds = 59d, minutes = 14d;
+    private bool failed = false;
     // Start is called before the first frame update
-    private void Start()
+    void Start()
     {
         timer = gameObject.GetComponent<Text>();
-        missionFailed = GameObject.Find("UI_MissionFail");
-        missionFailed.SetActive(false);
+        //missionFailed = GameObject.Find("UI_MissionFail");
+        missionFailed.GetComponent<CanvasRenderer>().SetAlpha(0);
         timer.text = ("00:"+(int)minutes+":"+(int)seconds);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!failed) UpdateTimer();
+        else
+        {
+            timer.text = ("00:00:00");
+            missionFailed.SetActive(true);
+        }
+    }
+    private void UpdateTimer()
+    {
         seconds -= Time.deltaTime;
-        if (seconds>=1 && !missionFailed.activeSelf)
+        if (seconds >= 1)
         {
             timer.text = ("00:" + (int)minutes + ":" + (int)seconds);
         }
-        else if (seconds <= 0 && minutes >= 1 && !missionFailed.activeSelf)
+        else if (seconds <= 0 && minutes >= 1)
         {
             minutes -= 1;
             seconds = 59d;
             timer.text = ("00:" + (int)minutes + ":" + (int)seconds);
         }
-        else if (seconds <= 0 && !missionFailed.activeSelf)
+        else if (seconds <= 0)
         {
-            missionFailed.SetActive(true);
+            missionFailed.GetComponent<CanvasRenderer>().SetAlpha(100);
+            failed = true;
             timer.text = ("00:00:00");
         }
         else if (Input.anyKeyDown)
         {
-            
-        }
-        if (!missionFailed.activeSelf) timer.text = ("00:" + (int)minutes + ":" + (int)seconds);
-    }
 
+        }
+        else timer.text = ("00:" + (int)minutes + ":" + (int)seconds);
+    }
 }

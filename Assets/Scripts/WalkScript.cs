@@ -62,10 +62,10 @@ class WalkScript : MonoBehaviour
         }
         if (!fly && transform.rotation.x != 0)
         {
-            transform.rotation = Quaternion.Euler(0f, transform.rotation.y, 0f);
+
+            transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
         }
     }
-
 
     private bool CanRotate(bool IsRoll, bool positive)
     {
