@@ -4,13 +4,13 @@ using UnityEngine;
 
  public class FlyingBirdScript : MonoBehaviour
 {
-    public float minAngle = 0;
-    public float maxAngle = 0;
-    public float upwardForce = 0;
-    public float flapTime = 0;
-    public float zVo = 0;
-    public float xVo = 0;
-    public float yVo = 0;
+    public float minAngle = 45;
+    public float maxAngle = 315;
+    public float upwardForce = 300;
+    public float flapTime = 0.9f;
+    public float zVo = 100;
+    public float xVo = 50;
+    public float yVo = 50;
     public int maxReps = 11;
     public bool readyToFly = true;
     public bool rested = true;
