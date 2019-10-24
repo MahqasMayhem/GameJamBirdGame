@@ -16,7 +16,7 @@ public class Gametracker : MonoBehaviour //TOD: Keep track of Winning and losing
         canvas.gameObject.SetActive(true);
         winLoseContainer = canvas.Find("UI_VictoryContainer").gameObject;
         uiMissionWin = winLoseContainer.transform.Find("UI_MissionWin").gameObject;
-        uiMissionFail = winLoseContainer.transform.Find("UI_MissionFail").gameObject;
+        uiMissionFail = GameObject.Find("UI_MissionFail");
         uiMissionFail.SetActive(false);
         uiMissionWin.SetActive(false);
 

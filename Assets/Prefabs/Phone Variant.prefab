@@ -29,6 +29,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.15, z: 0.4}
   m_Center: {x: 0.0040603243, y: -0.0016413266, z: 0}
+--- !u!114 &5791219312408600707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5065813406696542418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c679e8f8980fe82408db429e48737814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: phone
+  objectType: intel
+  canGrab: 1
+  objectHealth: 0
+  tags: []
+  initialParent: {fileID: 0}
 --- !u!1001 &3849609434485508571
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44,7 +62,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 3867d01ec4cadce46a391473f01a29ac,
         type: 3}
       propertyPath: m_TagString
-      value: Phone
+      value: Interactive
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3867d01ec4cadce46a391473f01a29ac,
         type: 3}
