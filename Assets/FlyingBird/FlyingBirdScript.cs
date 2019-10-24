@@ -46,25 +46,25 @@ using UnityEngine;
         if (Input.GetKey("s") || Input.GetKey("down"))
         {
             //transform.Rotate(1f, 0, 0);
-            transform.Rotate(Vector3.right, 1f);
+            transform.Rotate(Vector3.right, 1.8f);
         }
 
         if (Input.GetKey("up") || Input.GetKey("w"))
         {
             //transform.Rotate(-1f, 0, 0);
-            transform.Rotate(Vector3.right, -1f);
+            transform.Rotate(Vector3.right, -1.8f);
         }
 
         if (Input.GetKey("a") || Input.GetKey("left"))
         {
             //transform.Rotate(0, -1f, 0);
-            transform.Rotate(Vector3.up, -1f);
+            transform.Rotate(Vector3.up, -1.8f);
         }
 
         if (Input.GetKey("d") || Input.GetKey("right"))
         {
             //transform.Rotate(0, 1f, 0);
-            transform.Rotate(Vector3.up, 1f);
+            transform.Rotate(Vector3.up, 1.8f);
         }
 
         //transform.Rotate(Input.GetAxis("Vertical"),0.0f, - Input.GetAxis("Horizontal"));

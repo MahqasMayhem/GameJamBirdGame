@@ -94,6 +94,11 @@ class WalkScript : MonoBehaviour
             cc.Move(transform.forward * (zVo * 2) * Time.deltaTime);
         }
 
+        else if (Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.Tab))
+        {
+            cc.Move(transform.forward * (zVo / 2) * Time.deltaTime);
+        }
+
         else
         {
             cc.Move(transform.forward * (zVo) * Time.deltaTime);

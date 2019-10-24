@@ -1,12 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
 
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
+
+    void Start()
+    {
+        pauseMenuUI = GameObject.Find("Canvas/PauseMenu");
+        pauseMenuUI.SetActive(false);
+    }
 
 
     // Update is called once per frame
@@ -40,14 +47,13 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMenu()
     {
-        Debug.Log("LoadingMenu...");
+        SceneManager.LoadScene("TitleScreen");
     }
 
     public void QuitGame()
     {
         Debug.Log("Quitting game...");
+        Application.Quit();
     }
 
 }
-
-
