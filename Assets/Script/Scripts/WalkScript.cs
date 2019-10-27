@@ -7,6 +7,7 @@ class WalkScript : MonoBehaviour
 {
     public float speed;
     public bool fly;
+    public bool invert = false;
     public GameObject MissionComplete;
     public float minAngle = 45;
     public float maxAngle = 315;
@@ -151,16 +152,30 @@ class WalkScript : MonoBehaviour
             
 
             //if (isInverted) targetAngles.x -= 1f;   //TODO
-            /*else*/ targetAngles.x += +1f;
-            
+            /*else*/ //targetAngles.x += 1f;
+            if (invert)
+            {
+                targetAngles.x -= 2f;
+            }
+            {
+                targetAngles.x += 1f;
+            }
+
         }
 
         if (Input.GetKey("up") || Input.GetKey("w"))
         {
             Debug.Log("Rotate Down");
             //transform.Rotate(-1f, 0, 0); 
-            targetAngles.x -= 1f;
+            //targetAngles.x -= 1f;
             //transform.Rotate(Vector3.right, -1f);
+            if(invert)
+            {
+                targetAngles.x += 2f;
+            }
+            {
+                targetAngles.x -= 1f;
+            }
         }
 
         if (Input.GetKey("a") || Input.GetKey("left"))
@@ -265,5 +280,10 @@ class WalkScript : MonoBehaviour
             var gravity = Physics.gravity * Time.deltaTime;
             cc.Move(transform.up * gravity.y);
         }
+    }
+    
+    public void invertControls()
+    {
+        invert = !invert;
     }
 }
