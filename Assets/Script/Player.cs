@@ -28,9 +28,11 @@ public class Player : MonoBehaviour
         }
 
         suspicion = 0f;
-        while (!targetPhone)
+        int whilestop = 0;
+        while (!targetPhone && whilestop <10)
         {
             targetPhone = TargetDevice();
+            if (targetPhone) Debug.Log("Got Device");
         }
 
 
@@ -70,10 +72,8 @@ public class Player : MonoBehaviour
         {
             eavesdropping = true;
             var target = other.gameObject.GetComponent<Transform>().parent.GetComponent<Transform>();
-            if (target != currentEavesdrop)
-            {
-                currentEavesdrop = target;
-            }
+            currentEavesdrop = target;
+            Debug.Log(currentEavesdrop, currentEavesdrop.gameObject);
             BroadcastMessage("EnableEavesdrop");
         }
         if (other.gameObject.name == "BirdNest")
@@ -123,8 +123,11 @@ public class Player : MonoBehaviour
 
             if (info.objectType == "Phone")
             {
+                Debug.Log("Got a phone to try on");
                 targetDevice = info.gameObject;
+                Debug.Log("Device set");
                 info.objectType = "Intel";
+                Debug.Log("Phone Tag Set, returning device");
                 return targetDevice;
             }
             else continue;

@@ -115,6 +115,7 @@ public class Eavesdropper : MonoBehaviour
         UI_DialogueContainer.SetActive(true);
         currentEavesdrop = playerManager.currentEavesdrop;
         ObjectInfo info = currentEavesdrop.gameObject.GetComponent<ObjectInfo>();
+        Debug.Log(info.tags);
         string typeTag = info.tags[0];
         currentDialogue = textManager.GetRandomDialogue(typeTag);
         textPrinter = StartCoroutine(FetchNextChar(currentDialogue));
