@@ -54,6 +54,7 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Quitting game...");
         Application.Quit();
+        //UnityEditor.EditorApplication.isPlaying = false;  Namespace error
     }
 
 }

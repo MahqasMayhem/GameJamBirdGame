@@ -41,7 +41,7 @@ public class Gametracker : MonoBehaviour //TOD: Keep track of Winning and losing
     private void ReturnToMenu()
     {
         canvas.gameObject.SetActive(false);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
 
     }
 }
