@@ -6,14 +6,18 @@ using UnityEngine;
 
 public class ObjectInfo : MonoBehaviour
 {
+    [Tooltip("Friendly name for the object")]
     public string objectName;
+    [Tooltip("The object's type. I.E. Phone, NPCContainer")]
     public string objectType;
+    [Tooltip("Whether or not the object can be picked up by the Player.")]
     public bool canGrab;
+    [Tooltip("Health value between 0 and 100.")]
     public float objectHealth;
-
+    [Tooltip("Descriptor tags to be assigned to the object. NPCS: First tag must always be either 'Innocent' or 'Group'.")]
     public string[] tags;
 
-
+    [System.NonSerialized] //Do not show in Inspector
     public Transform initialParent;
     private void Awake()
     {

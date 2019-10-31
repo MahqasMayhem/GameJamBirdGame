@@ -7,18 +7,18 @@ using UnityEngine.SceneManagement;
 public class TimerScript : MonoBehaviour
    
 {
-    
-    public GameObject missionFailed;
+
+    private Gametracker gametracker;
     private Text timer;
     public double seconds = 59d, minutes = 14d;
-    private bool failed = false;
+    private bool failed;
     // Start is called before the first frame update
     void Start()
     {
         timer = gameObject.GetComponent<Text>();
-        //missionFailed = GameObject.Find("UI_MissionFail");
-        missionFailed.GetComponent<CanvasRenderer>().SetAlpha(0);
+        gametracker = GameObject.Find("Gametracker").GetComponent<Gametracker>();
         timer.text = ("00:"+(int)minutes+":"+(int)seconds);
+        failed = false;
     }
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class TimerScript : MonoBehaviour
         else
         {
             timer.text = ("00:00:00");
-            missionFailed.SetActive(true);
+            gametracker.Invoke("LoseGame",0);
         }
     }
     private void UpdateTimer()
@@ -46,7 +46,7 @@ public class TimerScript : MonoBehaviour
         }
         else if (seconds <= 0)
         {
-            missionFailed.GetComponent<CanvasRenderer>().SetAlpha(100);
+            
             failed = true;
             timer.text = ("00:00:00");
         }

@@ -27,7 +27,29 @@ public class TextHandler : MonoBehaviour
 
 
     }
-
+    public string GetRandomDialogue(string type)
+    {
+        if (type == "Innocent")
+        {
+            string text = GetRandomInnocentDialogue();
+            return text;
+        }
+        else if (type == "Group")
+        {
+            string text = GetRandomGroupDialogue();
+            return text;
+        }
+        else if (type == "Spy")
+        {
+            string text = GetRandomSpyDialogue();
+            return text;
+        }
+        else
+        {
+            string asset = "Invalid Dialogue Type";
+            return asset;
+        }
+    }
     public string GetRandomInnocentDialogue()
     {
 

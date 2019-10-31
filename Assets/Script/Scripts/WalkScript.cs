@@ -7,7 +7,6 @@ class WalkScript : MonoBehaviour
 {
     public float speed;
     public bool fly;
-    public GameObject MissionComplete;
     public float minAngle = 45;
     public float maxAngle = 315;
     public float upwardForce = 300;
@@ -25,10 +24,9 @@ class WalkScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (speed == 0) speed = 10;
         cc = GetComponent<CharacterController>();
-        MissionComplete = GameObject.Find("UI_MissionWin");
-        MissionComplete.SetActive(false);
-        anim = transform.Find("Pigeon").gameObject.GetComponent<Animator>();
+        anim = transform.GetComponentInChildren<Animator>();
         anim.SetBool("IsWalking", true);
     }
 
@@ -151,7 +149,7 @@ class WalkScript : MonoBehaviour
             
 
             //if (isInverted) targetAngles.x -= 1f;   //TODO
-            /*else*/ targetAngles.x += +1f;
+            /*else*/ targetAngles.x += 1f * Time.timeScale;
             
         }
 
@@ -159,21 +157,21 @@ class WalkScript : MonoBehaviour
         {
             Debug.Log("Rotate Down");
             //transform.Rotate(-1f, 0, 0); 
-            targetAngles.x -= 1f;
+            targetAngles.x -= 1f * Time.timeScale;
             //transform.Rotate(Vector3.right, -1f);
         }
 
         if (Input.GetKey("a") || Input.GetKey("left"))
         {
             //transform.Rotate(0, -1f, 0); 
-            targetAngles.y -= 1.8f;
+            targetAngles.y -= 1.8f * Time.timeScale;
             //transform.Rotate(Vector3.up, -1f);
         }
 
         if (Input.GetKey("d") || Input.GetKey("right"))
         {
             //transform.Rotate(0, 1f, 0); 
-            targetAngles.y += 1.8f;
+            targetAngles.y += 1.8f * Time.timeScale;
             //transform.Rotate(Vector3.up, 1f);
         }
         targetAngles.x = ClampAngle(targetAngles.x, -65, 65);
@@ -253,12 +251,12 @@ class WalkScript : MonoBehaviour
         if (Input.GetKey("left") || Input.GetKey("a"))
         {
             //rb.velocity = -transform.right * speed;
-            transform.Rotate(0, -1.5f, 0);
+            transform.Rotate(0, -1.5f * Time.timeScale, 0);
         }
         if (Input.GetKey("right") || Input.GetKey("d"))
         {
             //rb.velocity = transform.right * speed;
-            transform.Rotate(0, 1.5f, 0);
+            transform.Rotate(0, 1.5f * Time.timeScale, 0);
         }
         if (!cc.isGrounded)
         {

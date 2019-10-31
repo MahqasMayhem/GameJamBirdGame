@@ -5,12 +5,12 @@ using UnityEngine;
 // Class to place all methods for manipulating and interacting with world objects.
 public class ObjectHandler 
 {
-    private readonly Transform beakBindPoint = GameObject.FindGameObjectWithTag("Player").transform.Find("BeakBindPoint");
+    //private readonly Transform beakBindPoint = GameObject.FindGameObjectWithTag("Player").transform.Find("BeakBindPoint");
 
     //-----------------------------------------------------------------------------------------
     //-----------------------------------Invokeable Methods------------------------------------
     //-----------------------------------------------------------------------------------------
-    public void GrabObject(GameObject worldObject) //attach object to beak
+    public void GrabObject(GameObject worldObject, Transform beakBindPoint) //attach object to beak
     {
         if (worldObject.GetComponent<ObjectInfo>().canGrab && beakBindPoint.childCount < 2)
         {
@@ -27,13 +27,11 @@ public class ObjectHandler
             }
         }
     }
-    public void DropObject()
+    public void DropObject(Transform beakBindPoint)
     {
-        Transform worldObject = beakBindPoint.GetChild(0);
-        Vector3 worldPos = worldObject.position;
-        worldObject.SetParent(worldObject.GetComponent<ObjectInfo>().initialParent);
-        worldObject.position = worldPos;
-        worldObject.localPosition = Vector3.zero;
+        GameObject worldObject = beakBindPoint.GetChild(0).gameObject;
+        //Vector3 worldPos = worldObject.transform.position;
+        beakBindPoint.DetachChildren();
         worldObject.GetComponent<Rigidbody>().useGravity = true;
         worldObject.GetComponent<Collider>().enabled = true;
 
@@ -45,17 +43,17 @@ public class ObjectHandler
         }
 
     }
-    public void DropObject(GameObject dropPoint)
+    public void DropObject(Transform beakBindPoint, GameObject dropPoint)
     {
         Transform dropPosition = dropPoint.GetComponent<Transform>();
         Transform worldObject = beakBindPoint.GetChild(0);
         worldObject.SetParent(dropPosition);
         worldObject.position = dropPosition.position;
         worldObject.localPosition = Vector3.zero;
-        worldObject.GetComponent<Rigidbody>().useGravity = true;
+        //worldObject.GetComponent<Rigidbody>().useGravity = true;
         //worldObject.GetComponent<Collider>().enabled = true;
 
-        if (GetType(worldObject.gameObject) == "intel")
+        if (GetType(worldObject.gameObject) == "Intel")
         {
             AcquireIntel(worldObject.gameObject);
         }
@@ -69,7 +67,7 @@ public class ObjectHandler
         }
 
     }
-
+   
     //-----------------------------------------------------------------------------------------
     //-----------------------------------------Invokers----------------------------------------
     //-----------------------------------------------------------------------------------------

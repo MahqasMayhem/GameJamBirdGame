@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     public bool eavesdropping;
 
     private Transform playerT;
-    private ObjectHandler obj;
+    private ObjectHandler obj = new ObjectHandler();
     #endregion
 
 
@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         #region Variable Definition
-        obj = new ObjectHandler();
+        //obj = new ObjectHandler();
         if (!player)
         {
             player = this.gameObject;
@@ -33,10 +33,7 @@ public class Player : MonoBehaviour
             targetPhone = TargetDevice();
         }
 
-        missionComplete = GameObject.Find("UI_MissionWin");
-        missionComplete.SetActive(false);
-        missionFail = GameObject.Find("UI_MissionFail");
-        missionFail.SetActive(false);
+
         beakBindPoint = transform.Find("BeakBindPoint").GetComponent<Transform>();
         playerT = player.GetComponent<Transform>();
         eavesdropLevel = 0f;
@@ -49,6 +46,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         // UpdateEavesdropLevel();
+        if (Input.GetButton("dropKeybind")) obj.DropObject(beakBindPoint);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,9 +58,9 @@ public class Player : MonoBehaviour
             Grab(other.gameObject.GetComponent<Transform>());
         }
         */
-        if (other.CompareTag("Interactive"))
+        if (other.CompareTag("Interactive") && other.gameObject.GetComponent<ObjectInfo>().canGrab)
         {
-            obj.GrabObject(other.gameObject);
+            obj.GrabObject(other.gameObject, beakBindPoint);
         }
         if (other.CompareTag("NPC"))
         {
@@ -70,31 +69,17 @@ public class Player : MonoBehaviour
         if ((other.gameObject.name == "ListenField") && !eavesdropping)
         {
             eavesdropping = true;
-            if (other.gameObject.GetComponent<Transform>() != currentEavesdrop)
+            var target = other.gameObject.GetComponent<Transform>().parent.GetComponent<Transform>();
+            if (target != currentEavesdrop)
             {
-                currentEavesdrop = other.gameObject.GetComponent<Transform>().parent.GetComponent<Transform>();
+                currentEavesdrop = target;
             }
             BroadcastMessage("EnableEavesdrop");
         }
         if (other.gameObject.name == "BirdNest")
         {
-            obj.DropObject(other.gameObject);
-            /*
-            var device = beakBindPoint.GetChild(0).gameObject;
-            if (device == targetPhone) //Win
-            {
-                missionComplete.SetActive(true);
-            }
-            else if (device == null)
-            {
-                throw new System.NullReferenceException("Phone pickup not bound to bird or beakBindPoint child is missing");
-            }
-            else //Lose
-            {
-                missionFail.SetActive(true);
-                
-            }
-            */
+            obj.DropObject(beakBindPoint, other.gameObject);
+
         }
     }
 
@@ -106,69 +91,49 @@ public class Player : MonoBehaviour
             BroadcastMessage("DisableEavesdrop");
         }
     }
-    private GameObject TargetDevice()
+
+    public GameObject TargetDevice()
     {
-        var NPCs = new List<GameObject>();
-        foreach (GameObject NPC in GameObject.FindGameObjectsWithTag("NPC"))
+        var NPCs = new List<ObjectInfo>();
+
+        foreach (Transform NPC in GameObject.Find("Humans").GetComponentInChildren<Transform>())
         {
-            NPCs.Add(NPC);
+            var info = NPC.gameObject.GetComponent<ObjectInfo>();
+            if (info.objectType == "NPCContainer")
+                NPCs.Add(info);
+            else Debug.LogWarning(info + " may be missing an ObjectInfo component.", info);
         }
-        GameObject Spy = NPCs[Random.Range(0, NPCs.Count)];
+
+        ObjectInfo spyInfo = NPCs[Random.Range(0, NPCs.Count)];
+        GameObject Spy = spyInfo.gameObject;
+
+        for (int i = 0; i < spyInfo.tags.Length; i++)
+        {
+            if (spyInfo.tags[i] == "Innocent" || spyInfo.tags[i] == "Group")
+            {
+                spyInfo.tags[i] = "Spy";
+                break;
+            }
+            else continue;
+        }
         Debug.Log(Spy.ToString() + " is a spy!", Spy);
         GameObject targetDevice;
-        if (Spy.transform.parent.tag == "Group")
+        foreach (ObjectInfo info in Spy.GetComponentsInChildren<ObjectInfo>())
         {
-            Spy = Spy.transform.parent.gameObject;
-            foreach (Transform deviceT in Spy.GetComponentsInChildren<Transform>())
+
+            if (info.objectType == "Phone")
             {
-                if (deviceT.gameObject.tag == "Phone")
-                {
-                    targetDevice = deviceT.gameObject;
-                    return targetDevice;
-                }
-
-
+                targetDevice = info.gameObject;
+                info.objectType = "Intel";
+                return targetDevice;
             }
-            Debug.LogError("No phone found. Game broke");
-            return Spy;
+            else continue;
 
         }
-        else
-        {
-            Spy.tag = "Spy";
-            targetDevice = Spy.transform.Find("Phone Variant").gameObject;
-            Debug.Log("Not a group");
-            Spy.transform.Find("ListenField").tag = "Spy";
-            return targetDevice;
-        }
+        Debug.LogError("Phone not found for selected spy, retrying.", Spy);
+        return null;
+    }
 
-    }
-    /*
-    private void Grab(Transform device)
-    {
-        if (beakBindPoint.childCount < 1)
-        {
-            device.SetParent(beakBindPoint);
-            device.position = beakBindPoint.position;
-            device.rotation = Quaternion.Euler(0f, 0f, 0f);
-            device.localRotation = Quaternion.Euler(0f, 0f, 0f);
-            device.GetComponent<BoxCollider>().enabled = false;
-        }
-    }
-    */
-    private void UpdateEavesdropLevel()
-    {
-        if (eavesdropping == false)
-        {
-            eavesdropLevel = 5;
-        }
-        else
-        {
-            float distance = Vector3.Distance(currentEavesdrop.position, playerT.position);
-            eavesdropLevel = listenModifier * distance;
-        }
-
-    }
 
 
 }
