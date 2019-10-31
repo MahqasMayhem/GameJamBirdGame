@@ -7,6 +7,8 @@ class WalkScript : MonoBehaviour
 {
     public float speed;
     public bool fly;
+    public bool invert = false;
+    public GameObject MissionComplete;
     public float minAngle = 45;
     public float maxAngle = 315;
     public float upwardForce = 300;
@@ -150,7 +152,14 @@ class WalkScript : MonoBehaviour
 
             //if (isInverted) targetAngles.x -= 1f;   //TODO
             /*else*/ targetAngles.x += 1f * Time.timeScale;
-            
+            if (invert)
+            {
+                targetAngles.x -= 2f;
+            }
+            {
+                targetAngles.x += 1f;
+            }
+
         }
 
         if (Input.GetKey("up") || Input.GetKey("w"))
@@ -159,11 +168,19 @@ class WalkScript : MonoBehaviour
             //transform.Rotate(-1f, 0, 0); 
             targetAngles.x -= 1f * Time.timeScale;
             //transform.Rotate(Vector3.right, -1f);
+            if(invert)
+            {
+                targetAngles.x += 2f;
+            }
+            {
+                targetAngles.x -= 1f;
+            }
         }
 
         if (Input.GetKey("a") || Input.GetKey("left"))
         {
             //transform.Rotate(0, -1f, 0); 
+
             targetAngles.y -= 1.8f * Time.timeScale;
             //transform.Rotate(Vector3.up, -1f);
         }
@@ -251,11 +268,13 @@ class WalkScript : MonoBehaviour
         if (Input.GetKey("left") || Input.GetKey("a"))
         {
             //rb.velocity = -transform.right * speed;
+
             transform.Rotate(0, -1.5f * Time.timeScale, 0);
         }
         if (Input.GetKey("right") || Input.GetKey("d"))
         {
             //rb.velocity = transform.right * speed;
+
             transform.Rotate(0, 1.5f * Time.timeScale, 0);
         }
         if (!cc.isGrounded)
@@ -263,5 +282,10 @@ class WalkScript : MonoBehaviour
             var gravity = Physics.gravity * Time.deltaTime;
             cc.Move(transform.up * gravity.y);
         }
+    }
+    
+    public void invertControls()
+    {
+        invert = !invert;
     }
 }

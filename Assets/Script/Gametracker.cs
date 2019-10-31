@@ -45,9 +45,10 @@ public class Gametracker : MonoBehaviour //TOD: Keep track of Winning and losing
     }
     private void ReturnToMenu()
     {
+
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.timeScale;
-        if (!Application.isEditor) SceneManager.LoadScene(0);
+        if (!Application.isEditor) SceneManager.LoadScene(0, LoadSceneMode.Single);
 
     }
         IEnumerator LerpTime(float _lerpTimeTo, float _timeToTake)
