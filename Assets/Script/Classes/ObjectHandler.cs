@@ -78,7 +78,7 @@ public class ObjectHandler
     private void AcquireIntel(GameObject intel)
     {
         Debug.Log("Intel!");
-        GameObject.Find("GameTracker").GetComponent<Gametracker>().AcquirePhone();
+        GameObject.Find("GameTracker").GetComponent<GameManager>().AcquirePhone();
     }
     //-----------------------------------------------------------------------------------------
     //----------------------Utility methods should go below here-------------------------------

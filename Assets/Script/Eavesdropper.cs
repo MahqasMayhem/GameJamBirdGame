@@ -47,7 +47,7 @@ public class Eavesdropper : MonoBehaviour
         string asset = textManager.GetRandomInnocentDialogue();
         textDisplay = UI_DialogueBox.GetComponent<Text>();
 
-        disableDialogueCorruption = GameObject.Find("Gametracker").GetComponent<Gametracker>().DisableDialogueCorruption;
+        disableDialogueCorruption = GameObject.Find("Gametracker").GetComponent<GameManager>().DisableDialogueCorruption;
     }
 
     public IEnumerator FetchNextChar(string dialogue) //Generate the next character

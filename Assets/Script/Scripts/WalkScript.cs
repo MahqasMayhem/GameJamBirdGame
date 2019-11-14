@@ -8,11 +8,11 @@ class WalkScript : MonoBehaviour
     public float speed;
     public bool fly;
     public bool invert = false;
-    public GameObject MissionComplete;
     public float minAngle = 45;
     public float maxAngle = 315;
     public float upwardForce = 300;
     public float flapTime = 0.9f;
+    [Tooltip("Speed at which the bird flies forward")]
     public float zVo = 20;
     public float xVo = 10;
     public float yVo = 10;
@@ -23,6 +23,9 @@ class WalkScript : MonoBehaviour
     private int reps = 0;
     private float xAngle, yAngle, zAngle;
     public Animator anim;
+
+    private int inverted = 0;
+    public float axisH, axisVWalk, axisVFly, lTrigger, rTrigger, flySpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +38,15 @@ class WalkScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (!invert) inverted = 1;
+        else inverted = -1;
+        flySpeed = Input.GetAxis("flySpeed");
+        lTrigger = Input.GetAxis("slowFly");
+        rTrigger = Input.GetAxis("fastFly");
+        axisH = Input.GetAxis("Horizontal");
+        axisVWalk = Input.GetAxis("Vertical");
+        axisVFly = Input.GetAxis("VerticalFly");
+        if (Input.GetButtonDown("ToggleFlight"))
         {
             fly = !fly;
             if (!fly)
@@ -47,12 +58,6 @@ class WalkScript : MonoBehaviour
         if (fly)
         {
             Fly();
-
-            if(Input.GetKeyDown("space"))
-            {
-               
-            }
-
         }
 
         else
@@ -89,108 +94,40 @@ class WalkScript : MonoBehaviour
     }
     void Fly()
     {
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        if (flySpeed != 0)
         {
+            if (flySpeed > 0)
             cc.Move(transform.forward * (zVo * 2) * Time.deltaTime);
+            else cc.Move(transform.forward * (zVo / 2) * Time.deltaTime);
         }
-
-        else if (Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.Tab))
+        else cc.Move(transform.forward * (zVo) * Time.deltaTime);
+        /*
+        if (rTrigger > 0)
         {
-            cc.Move(transform.forward * (zVo / 2) * Time.deltaTime);
+            cc.Move(transform.forward * (zVo * (2f* rTrigger)) * Time.deltaTime);
         }
-
+        else if (lTrigger > 0)
+        {
+            cc.Move(transform.forward * (zVo / (2f * lTrigger)) * Time.deltaTime);
+        }
         else
         {
-            cc.Move(transform.forward * (zVo) * Time.deltaTime);
+            cc.Move(transform.forward * (zVo * flySpeed) * Time.deltaTime);
             //rb.velocity = transform.forward * zVo; 
-        }
-        /*
-        if ((Input.GetKey("s") || Input.GetKey("down")) && CanRotate(false))
-        {
-
-            //transform.Rotate(1f, 0, 0); 
-            transform.Rotate(Vector3.right, 1f);
-        }
-
-        if ((Input.GetKey("up") || Input.GetKey("w")) && CanRotate(false))
-        {
-            Debug.Log("Rotate Down");
-            //transform.Rotate(-1f, 0, 0); 
-            transform.Rotate(Vector3.right, -1f);
-        }
-
-        if ((Input.GetKey("a") || Input.GetKey("left")) && CanRotate(true))
-        {
-            //transform.Rotate(0, -1f, 0); 
-            transform.Rotate(Vector3.up, -1f);
-        }
-
-        if ((Input.GetKey("d") || Input.GetKey("right")) && CanRotate(true))
-        {
-            //transform.Rotate(0, 1f, 0); 
-            transform.Rotate(Vector3.up, 1f);
         }
         */
 
-        if (reps > maxReps)
-        {
-            rested = false;
-            StartCoroutine("Resting");
-            reps = 0;
-        }
-
-        if (readyToFly && rested)
-        {
-            readyToFly = false; 
-        }
         Quaternion targetRotation = transform.rotation;
         Vector3 targetAngles = targetRotation.eulerAngles;
-        if (Input.GetKey("s") || Input.GetKey("down"))
-        {
+
+            //Change Pitch
+                targetAngles.x += axisVFly * Time.deltaTime * inverted *50f;
+            //Change Direction
+                targetAngles.y += axisH * Time.deltaTime *50f;
 
             
+        
 
-            //if (isInverted) targetAngles.x -= 1f;   //TODO
-            /*else*/ targetAngles.x += 1f * Time.timeScale;
-            if (invert)
-            {
-                targetAngles.x -= 2f;
-            }
-            {
-                targetAngles.x += 1f;
-            }
-
-        }
-
-        if (Input.GetKey("up") || Input.GetKey("w"))
-        {
-            Debug.Log("Rotate Down");
-            //transform.Rotate(-1f, 0, 0); 
-            targetAngles.x -= 1f * Time.timeScale;
-            //transform.Rotate(Vector3.right, -1f);
-            if(invert)
-            {
-                targetAngles.x += 2f;
-            }
-            {
-                targetAngles.x -= 1f;
-            }
-        }
-
-        if (Input.GetKey("a") || Input.GetKey("left"))
-        {
-            //transform.Rotate(0, -1f, 0); 
-
-            targetAngles.y -= 1.8f * Time.timeScale;
-            //transform.Rotate(Vector3.up, -1f);
-        }
-
-        if (Input.GetKey("d") || Input.GetKey("right"))
-        {
-            //transform.Rotate(0, 1f, 0); 
-            targetAngles.y += 1.8f * Time.timeScale;
-            //transform.Rotate(Vector3.up, 1f);
-        }
         targetAngles.x = ClampAngle(targetAngles.x, -65, 65);
         targetAngles.z = ClampAngle(targetAngles.z, -65, 65);
         targetRotation = Quaternion.Euler(targetAngles);
@@ -256,27 +193,13 @@ class WalkScript : MonoBehaviour
 
     private void Walk()
     {
-        if (Input.GetKey("up") || Input.GetKey("w"))
-        {
-            cc.Move(transform.forward * (speed) * Time.deltaTime);
-        }
+        float movement = axisVWalk * Time.deltaTime * speed;
+        cc.Move(transform.forward * movement); //forwards
+        
+        float rotation = axisH * Time.deltaTime * 50f;
+        transform.Rotate(0, rotation, 0);
+        
 
-        if (Input.GetKey("down") || Input.GetKey("s"))
-        {
-            cc.Move(transform.forward * (-speed) * Time.deltaTime);
-        }
-        if (Input.GetKey("left") || Input.GetKey("a"))
-        {
-            //rb.velocity = -transform.right * speed;
-
-            transform.Rotate(0, -1.5f * Time.timeScale, 0);
-        }
-        if (Input.GetKey("right") || Input.GetKey("d"))
-        {
-            //rb.velocity = transform.right * speed;
-
-            transform.Rotate(0, 1.5f * Time.timeScale, 0);
-        }
         if (!cc.isGrounded)
         {
             var gravity = Physics.gravity * Time.deltaTime;

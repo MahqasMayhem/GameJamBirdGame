@@ -8,7 +8,7 @@ public class TimerScript : MonoBehaviour
    
 {
 
-    private Gametracker gametracker;
+    private GameManager gametracker;
     private Text timer;
     public double seconds = 59d, minutes = 14d;
     private bool failed;
@@ -16,7 +16,7 @@ public class TimerScript : MonoBehaviour
     void Start()
     {
         timer = gameObject.GetComponent<Text>();
-        gametracker = GameObject.Find("Gametracker").GetComponent<Gametracker>();
+        gametracker = GameObject.Find("Gametracker").GetComponent<GameManager>();
         timer.text = ("00:"+(int)minutes+":"+(int)seconds);
         failed = false;
     }

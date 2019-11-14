@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     #region Variable declaration
-    public GameObject player, missionComplete, missionFail, targetPhone;
+    public GameObject player, missionComplete, missionFail, targetPhone, spy;
     public Transform beakBindPoint, currentEavesdrop;
     public float listenModifier, eavesdropLevel, suspicion;
     public bool eavesdropping;
@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
         while (!targetPhone && whilestop <10)
         {
             targetPhone = TargetDevice();
+            whilestop++;
             if (targetPhone) Debug.Log("Got Device");
         }
 
@@ -105,20 +106,20 @@ public class Player : MonoBehaviour
         }
 
         ObjectInfo spyInfo = NPCs[Random.Range(0, NPCs.Count)];
-        GameObject Spy = spyInfo.gameObject;
 
         for (int i = 0; i < spyInfo.tags.Length; i++)
         {
             if (spyInfo.tags[i] == "Innocent" || spyInfo.tags[i] == "Group")
             {
                 spyInfo.tags[i] = "Spy";
+                spy = spyInfo.gameObject;
                 break;
             }
             else continue;
         }
-        Debug.Log(Spy.ToString() + " is a spy!", Spy);
+        Debug.Log(spy.ToString() + " is a spy!", spy);
         GameObject targetDevice;
-        foreach (ObjectInfo info in Spy.GetComponentsInChildren<ObjectInfo>())
+        foreach (ObjectInfo info in spy.GetComponentsInChildren<ObjectInfo>())
         {
 
             if (info.objectType == "Phone")
@@ -133,7 +134,8 @@ public class Player : MonoBehaviour
             else continue;
 
         }
-        Debug.LogError("Phone not found for selected spy, retrying.", Spy);
+        Debug.LogError("Phone not found for selected spy, retrying.", spy);
+        spy = null;
         return null;
     }
 
