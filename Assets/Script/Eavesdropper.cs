@@ -54,7 +54,6 @@ public class Eavesdropper : MonoBehaviour
     {
         int i = 0;
 
-        Debug.Log("Dialogue print!:" + dialogue);
         while (i < dialogue.Length)
         {
             if (char.IsWhiteSpace(dialogue[i])) //print all spaces

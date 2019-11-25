@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 
         suspicion = 0f;
         int whilestop = 0;
-        while (!targetPhone && whilestop <10)
+        while (!targetPhone && whilestop <30)
         {
             targetPhone = TargetDevice();
             whilestop++;
@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Interactive") && other.gameObject.GetComponent<ObjectInfo>().canGrab)
         {
             obj.GrabObject(other.gameObject, beakBindPoint);
+            Debug.Log("Grabbing Phone");
         }
         if (other.CompareTag("NPC"))
         {
@@ -74,7 +75,7 @@ public class Player : MonoBehaviour
             eavesdropping = true;
             var target = other.gameObject.GetComponent<Transform>().parent.GetComponent<Transform>();
             currentEavesdrop = target;
-            Debug.Log(currentEavesdrop, currentEavesdrop.gameObject);
+            
             BroadcastMessage("EnableEavesdrop");
         }
         if (other.gameObject.name == "BirdNest")

@@ -29,43 +29,49 @@ public class ObjectHandler
     }
     public void DropObject(Transform beakBindPoint)
     {
-        GameObject worldObject = beakBindPoint.GetChild(0).gameObject;
-        //Vector3 worldPos = worldObject.transform.position;
-        beakBindPoint.DetachChildren();
-        worldObject.GetComponent<Rigidbody>().useGravity = true;
-        worldObject.GetComponent<Collider>().enabled = true;
-
-
-
-        if (CompareTag(worldObject.gameObject, "activateOnDrop"))
+        if (beakBindPoint.childCount != 0)
         {
-            ActivateObject(worldObject.gameObject);
-        }
+            GameObject worldObject = beakBindPoint.GetChild(0).gameObject;
+            //Vector3 worldPos = worldObject.transform.position;
+            beakBindPoint.DetachChildren();
+            worldObject.GetComponent<Collider>().enabled = true;
+            //worldObject.GetComponent<Rigidbody>().useGravity = true;
+            //worldObject.GetComponent<Rigidbody>().isKinematic = false;
+            
 
-    }
-    public void DropObject(Transform beakBindPoint, GameObject dropPoint)
-    {
-        Transform dropPosition = dropPoint.GetComponent<Transform>();
-        Transform worldObject = beakBindPoint.GetChild(0);
-        worldObject.SetParent(dropPosition);
-        worldObject.position = dropPosition.position;
-        worldObject.localPosition = Vector3.zero;
-        //worldObject.GetComponent<Rigidbody>().useGravity = true;
-        //worldObject.GetComponent<Collider>().enabled = true;
 
-        if (GetType(worldObject.gameObject) == "Intel")
-        {
-            AcquireIntel(worldObject.gameObject);
-        }
-        else
-        {
-            Debug.Log("That's not an intel item!");
+
             if (CompareTag(worldObject.gameObject, "activateOnDrop"))
             {
                 ActivateObject(worldObject.gameObject);
             }
         }
+    }
+    public void DropObject(Transform beakBindPoint, GameObject dropPoint)
+    {
+        if (beakBindPoint.childCount != 0)
+        {
+            Transform dropPosition = dropPoint.GetComponent<Transform>();
+            Transform worldObject = beakBindPoint.GetChild(0);
+            worldObject.SetParent(dropPosition);
+            worldObject.position = dropPosition.position;
+            worldObject.localPosition = Vector3.zero;
+            //worldObject.GetComponent<Rigidbody>().isKinematic = true;
+            //worldObject.GetComponent<Collider>().enabled = true;
 
+            if (GetType(worldObject.gameObject) == "Intel")
+            {
+                AcquireIntel(worldObject.gameObject);
+            }
+            else
+            {
+                Debug.Log("That's not an intel item!");
+                if (CompareTag(worldObject.gameObject, "activateOnDrop"))
+                {
+                    ActivateObject(worldObject.gameObject);
+                }
+            }
+        }
     }
    
     //-----------------------------------------------------------------------------------------

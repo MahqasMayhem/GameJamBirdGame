@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+//using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
@@ -8,11 +10,15 @@ public class PauseMenu : MonoBehaviour
 
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
-
+    public Button resumeButton;
+    private UnityEngine.EventSystems.EventSystem esc;
+    
     void Start()
     {
         pauseMenuUI = GameObject.Find("Canvas/PauseMenu");
         pauseMenuUI.SetActive(false);
+        resumeButton = pauseMenuUI.transform.GetChild(0).GetComponent<Button>();
+        esc = GameObject.Find("EventSystem").GetComponent<UnityEngine.EventSystems.EventSystem>();
     }
 
 
@@ -34,6 +40,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume ()
     {
         pauseMenuUI.SetActive(false);
+        esc.SetSelectedGameObject(null);
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
@@ -41,6 +48,7 @@ public class PauseMenu : MonoBehaviour
     void Pause ()
     {
         pauseMenuUI.SetActive(true);
+        resumeButton.Select();
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
