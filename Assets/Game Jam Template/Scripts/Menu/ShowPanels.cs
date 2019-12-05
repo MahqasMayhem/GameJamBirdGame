@@ -35,7 +35,7 @@ public class ShowPanels : MonoBehaviour {
     public void ShowOptionsPanel()
 	{
 		optionsPanel.SetActive(true);
-		optionsTint.SetActive(true);
+		//optionsTint.SetActive(true);
         menuPanel.SetActive(false);
         SetSelection(optionsPanel);
 
@@ -46,7 +46,7 @@ public class ShowPanels : MonoBehaviour {
 	{
         menuPanel.SetActive(true);
         optionsPanel.SetActive(false);
-		optionsTint.SetActive(false);
+		//optionsTint.SetActive(false);
 	}
 
 	//Call this function to activate and display the main menu panel during the main menu
